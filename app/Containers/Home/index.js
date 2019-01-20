@@ -45,7 +45,7 @@ export default class Home extends Component<Props> {
       if (resp.httpStatus == 200) {
         console.log(resp)
         page > 1
-          ? this.setState({ data: [...data, resp.data.results], isLoading: false, page: page+1 })
+          ? this.setState({ data: [...data, ...resp.data.results], isLoading: false, page: page+1 })
           : this.setState({ data: resp.data.results, isLoading: false, page: page+1 })
       }
       else {
@@ -79,7 +79,7 @@ export default class Home extends Component<Props> {
             onPress={ () => this.props.navigation.navigate('DetailPost', { data: item }) }
           >
             <Image
-              source={{ uri: `${Api.hostImg500}${item.poster_path}` }}
+              source={{ uri: `${Api.hostImg200}${item.poster_path}` }}
               style={ styles.imgList }
             />
           </TouchableOpacity>

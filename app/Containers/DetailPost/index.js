@@ -91,7 +91,7 @@ export default class DetailPost extends Component<Props> {
             onPress={ () => this.props.navigation.replace('DetailPost', { data: item }) }
           >
             <Image
-              source={{ uri: `${Api.hostImg500}${item.poster_path}` }}
+              source={{ uri: `${Api.hostImg200}${item.poster_path}` }}
               style={ styles.imgList }
             />
           </TouchableOpacity>
@@ -120,7 +120,7 @@ export default class DetailPost extends Component<Props> {
             <View style={ styles.infoTitle }>
               <View style={ styles.infoLeft }>
                 <Image
-                  source={{ uri: `${Api.hostImg500}${data.poster_path}` }}
+                  source={{ uri: `${Api.hostImg200}${data.poster_path}` }}
                   style={{
                     height: widthPercentageToDP(22.5) * (h/w)
                   }}
@@ -150,6 +150,7 @@ export default class DetailPost extends Component<Props> {
             renderItem={ this._renderItem }
             keyExtractor={ (item, index) => 'key-'+index }
             removeClippedSubviews={true}
+            ListEmptyComponent={ () => <Text style={ styles.noDataText }>No Movie.</Text> }
           />
 
         </ScrollView>

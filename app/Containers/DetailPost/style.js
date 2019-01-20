@@ -11,7 +11,6 @@ export default StyleSheet.create({
     flex: 1,
   },
   infoContent: {
-    // height: heightPercentageToDP(30),
     paddingHorizontal: '3%'
   },
   infoLeft: {
@@ -81,5 +80,13 @@ export default StyleSheet.create({
     width: null,
     resizeMode: 'contain',
     borderRadius: 20,
-  }
+  },
+  noDataText: {
+    fontSize: heightPercentageToDP(2),
+    color: '#fff',
+    width: Metrics.screenWidth,
+    // textAlign: 'center',
+    marginHorizontal: widthPercentageToDP(3),
+    fontWeight: 'bold'
+  },
 })

@@ -5,8 +5,8 @@ import {
 class Api {
 
   static host = 'https://api.themoviedb.org/3'
-  static hostImg500 = 'https://image.tmdb.org/t/p/original'
-  static hostImgOri = 'https://image.tmdb.org/t/p/w500'
+  static hostImg200 = 'https://image.tmdb.org/t/p/w200'
+  static hostImgOri = 'https://image.tmdb.org/t/p/original'
 
   static headers() {
     return {

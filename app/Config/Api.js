@@ -12,12 +12,11 @@ class Api {
     return {
       'Accept' : 'application/json',
       'Content-Type' : 'application/json',
-      // 'Authorization' : `Bearer ${token}`
     }
   }
 
-  static get(route) {
-    return this.xhr(route, null, 'GET')
+  static get(route, params) {
+    return this.xhr(route, params, 'GET')
   }
 
   static put(route, params) {
@@ -33,13 +32,23 @@ class Api {
   }
 
   static xhr(route, params, verb) {
-    const url = `${this.host}/${route}?api_key=529ae25c5cdadee493d5fe38b674e0d2`
-    let options = Object.assign({ method: verb }, params ? { body: JSON.stringify(params) } : null );
+
+    let parameter = '';
+    if ( verb=="GET" ) {
+      if ( params !== undefined ){
+        for (let key in params) {
+          parameter += "&";
+          parameter += key + "=" + params[key];
+        }
+      }
+    }
+
+    const url = `${this.host}/${route}?api_key=529ae25c5cdadee493d5fe38b674e0d2${parameter}`
+    let options = Object.assign({ method: verb }, verb != 'GET' && params ? { body: JSON.stringify(params) } : null );
     options.headers = Api.headers()
     console.log('url', url, options)
 
     var timeOut = new Promise(function (resolve, reject) {
-      // console.log('reject',reject)
       setTimeout(() => reject({ "status": false, status_message: 'Connection Timeout (30s)', url: url, httpStatus: 500  }), 30000);
     });
 
@@ -54,12 +63,10 @@ class Api {
           }))
         )
         .then((res) => {
-          // console.log('respone', res)
           resolve(res)
         })
         .catch(function (error) {
           console.log('There has been a problem with your fetch operation: ' + error);
-          // reject({ status: false, status_message: error.message, url: url, httpStatus: 500 });
           if (error == 'TypeError: Network request failed') {
             reject({ status: false, status_message: 'Connection Timeout (30s)', url: url, httpStatus: 500 });
           }else {

@@ -63,7 +63,7 @@ export default class DetailPost extends Component<Props> {
       } else {
         Alert.alert(
           'Failed!',
-          resp.status_message || resp.data.status_message,
+          resp.status ? resp.data.status_message : resp.status_message,
           [
             {text: 'OK', onPress: () =>  this.setState({ isLoading: false }) },
           ]

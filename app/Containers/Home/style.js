@@ -30,5 +30,20 @@ export default StyleSheet.create({
     height: null,
     width: null,
     resizeMode: 'contain'
+  },
+
+  loadMore: {
+    width: widthPercentageToDP(50),
+    alignSelf: 'center',
+    borderRadius: 100,
+    height: heightPercentageToDP(7),
+    backgroundColor: '#353b48',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  loadMoreText: {
+    fontSize: heightPercentageToDP(2),
+    color: '#fff',
+    textAlign: 'center'
   }
 })

@@ -5,7 +5,10 @@ import {
   TouchableOpacity,
   FlatList,
   RefreshControl,
-  Alert
+  Alert,
+  ScrollView,
+  Text,
+  ActivityIndicator
 } from 'react-native';
 
 import Placeholder from 'rn-placeholder';
@@ -21,7 +24,8 @@ export default class Home extends Component<Props> {
     super(props);
     this.state = {
       data: ['dummy','dummy','dummy','dummy','dummy','dummy'],
-      isLoading: true
+      page: 1,
+      isLoading: true,
     }
     _HOME = this
   }
@@ -31,16 +35,24 @@ export default class Home extends Component<Props> {
   }
 
   _getData = () => {
+    let { page, data } = this.state
+
     this.setState({ isLoading: true })
-    Api.get(`movie/now_playing`).then(resp => {
+    let params = {
+      page
+    }
+    Api.get(`movie/now_playing`, params).then(resp => {
       if (resp.httpStatus == 200) {
         console.log(resp)
-        this.setState({ data: resp.data.results, isLoading: false })
+        page > 1
+          ? this.setState({ data: [...data, resp.data.results], isLoading: false, page: page+1 })
+          : this.setState({ data: resp.data.results, isLoading: false, page: page+1 })
       }
       else {
+        console.log('ee',resp.status ? resp.data.status_message : resp.status_message)
         Alert.alert(
           'Failed!',
-          resp.status_message || resp.data.status_message,
+          resp.status ? resp.data.status_message : resp.status_message ? resp.status_message : 'Error 500!',
           [
             {text: 'OK', onPress: () =>  this.setState({ isLoading: false }) },
           ]
@@ -78,7 +90,7 @@ export default class Home extends Component<Props> {
 
   render() {
     return (
-      <View style={ styles.container }>
+      <ScrollView style={ styles.container }>
         <NavBar 
           title='Now Playing'
           // onBackPress
@@ -100,7 +112,19 @@ export default class Home extends Component<Props> {
           keyExtractor={ (item, index) => 'key-'+index }
           removeClippedSubviews={true}
         />
-      </View>
+
+        <TouchableOpacity
+          onPress={ this._getData } 
+          style={ styles.loadMore }
+        >
+          {
+            this.state.isLoading
+              ? <ActivityIndicator />
+              : <Text style={ styles.loadMoreText }>Load More ...</Text>
+          }
+        </TouchableOpacity>
+
+      </ScrollView>
     );
   }
 }

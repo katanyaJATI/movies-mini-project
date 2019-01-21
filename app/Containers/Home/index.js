@@ -8,7 +8,8 @@ import {
   Alert,
   ScrollView,
   Text,
-  ActivityIndicator
+  ActivityIndicator,
+  SafeAreaView
 } from 'react-native';
 
 import Placeholder from 'rn-placeholder';
@@ -90,41 +91,42 @@ export default class Home extends Component<Props> {
 
   render() {
     return (
-      <ScrollView style={ styles.container }>
-        <NavBar 
-          title='Now Playing'
-          // onBackPress
-        />
-        <FlatList
-          refreshControl={
-            <RefreshControl
-              progressBackgroundColor='#636e72'
-              refreshing={this.state.isLoading}
-              onRefresh={ this._getData }
-            />
-          }
-          showsHorizontalScrollIndicator={false}
-          style={ styles.flatlistWrap }
-          contentContainerStyle={ styles.flatlist }
-          data={ this.state.data }
-          extraData={ this.state.data }
-          renderItem={ this._renderItem }
-          keyExtractor={ (item, index) => 'key-'+index }
-          removeClippedSubviews={true}
-        />
+      <SafeAreaView style={ styles.container }>
+        <ScrollView style={ styles.container }>
+          <NavBar 
+            title='Now Playing'
+            // onBackPress
+          />
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                progressBackgroundColor='#636e72'
+                refreshing={this.state.isLoading}
+                onRefresh={ this._getData }
+              />
+            }
+            showsHorizontalScrollIndicator={false}
+            style={ styles.flatlistWrap }
+            contentContainerStyle={ styles.flatlist }
+            data={ this.state.data }
+            extraData={ this.state.data }
+            renderItem={ this._renderItem }
+            keyExtractor={ (item, index) => 'key-'+index }
+            removeClippedSubviews={true}
+          />
 
-        <TouchableOpacity
-          onPress={ this._getData } 
-          style={ styles.loadMore }
-        >
-          {
-            this.state.isLoading
-              ? <ActivityIndicator />
-              : <Text style={ styles.loadMoreText }>Load More ...</Text>
-          }
-        </TouchableOpacity>
-
-      </ScrollView>
+          <TouchableOpacity
+            onPress={ this._getData } 
+            style={ styles.loadMore }
+          >
+            {
+              this.state.isLoading
+                ? <ActivityIndicator />
+                : <Text style={ styles.loadMoreText }>Load More ...</Text>
+            }
+          </TouchableOpacity>
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }

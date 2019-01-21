@@ -6,7 +6,8 @@ import {
   Text,
   ScrollView,
   FlatList,
-  Alert
+  Alert,
+  SafeAreaView
 } from 'react-native';
 
 import Placeholder from 'rn-placeholder';
@@ -105,7 +106,7 @@ export default class DetailPost extends Component<Props> {
     let { h, w } = this.state.imagePosterHeight
     console.log(data)
     return (
-      <View style={ styles.container }>
+      <SafeAreaView style={ styles.container }>
         <NavBar 
           title='Movie Detail'
           onBackPress
@@ -155,7 +156,7 @@ export default class DetailPost extends Component<Props> {
 
         </ScrollView>
         
-      </View>
+      </SafeAreaView>
     );
   }
 }

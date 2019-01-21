@@ -92,11 +92,11 @@ export default class Home extends Component<Props> {
   render() {
     return (
       <SafeAreaView style={ styles.container }>
+        <NavBar 
+          title='Now Playing'
+          // onBackPress
+        />
         <ScrollView style={ styles.container }>
-          <NavBar 
-            title='Now Playing'
-            // onBackPress
-          />
           <FlatList
             refreshControl={
               <RefreshControl
